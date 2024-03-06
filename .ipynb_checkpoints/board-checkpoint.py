@@ -7,7 +7,7 @@ class SYTransport(Enum):
     RAIL=3
 
 class Board(object):
-    def __init__(self, filename):
+    def __init__(self, filename: str):
         self.filename = filename
         self.num_vertices = 0
         self.adj_matrix = np.zeros(0)
@@ -47,5 +47,5 @@ class Board(object):
     def get_adj_list(self):
         return self.adj_list
     
-    def get_neighbors(self, vert):
+    def get_neighbors(self, vert: int):
         return self.adj_list[vert]
