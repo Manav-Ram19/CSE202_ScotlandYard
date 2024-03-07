@@ -102,10 +102,10 @@ def bfs(board: Board,
 def get_largest_distance(board: Board,
                          detective_locations: list,
                          mr_x_possible_locations: list) -> int:
-    totalDistances = defaultdict(int)
+    total_distances = defaultdict(int)
     for det_loc in detective_locations:
         distances_det = bfs(board, det_loc)
         for x_loc in mr_x_possible_locations:
-            totalDistances[x_loc] += distances_det[x_loc]
+            total_distances[x_loc] += distances_det[x_loc]
 
-    return min(totalDistances.values())
+    return min(total_distances.values())
