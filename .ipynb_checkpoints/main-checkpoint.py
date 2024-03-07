@@ -2,6 +2,7 @@ from game import game
 from mister_x import MisterX
 from board import Board
 from win import win
+from turn import heuristic_1_turn
 import random
 
 
@@ -14,8 +15,8 @@ def main():
     detective_locs = [0,1,2]
     assert(len(detective_locs) < num_vertices)
     
-    game(detective_locs, board, x.oracleMrXMove, win)
-    
+    positions = game(detective_locs, x.get_location(), board, x.oracleMrXMove, heuristic_1_turn, win)
+
 
 if __name__ == "__main__":
     main()

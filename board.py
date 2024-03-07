@@ -49,3 +49,11 @@ class Board(object):
     
     def get_neighbors(self, vert: int):
         return self.adj_list[vert]
+
+    def get_neighbors_by_transport(self, vert: int, transport: SYTransport):
+        adj_list_vert = self.adj_list[vert]
+        out = []
+        for path in adj_list_vert:
+            if path[1] == transport.value:
+                out.append(path)
+        return out

@@ -1,0 +1,6 @@
+5
+0 1 BUS
+0 2 RAIL
+1 3 TAXI
+1 4 BUS
+2 4 BUS
