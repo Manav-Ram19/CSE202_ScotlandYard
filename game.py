@@ -10,7 +10,7 @@ def game(detective_start_locations: list,
          turn: Callable[[], list],
          win: Callable[[], bool]) -> None:
 
-    D = detective_start_locations
+    D = detective_start_locations 
     positions = [D]
 
     logbook = []
@@ -18,15 +18,27 @@ def game(detective_start_locations: list,
     mr_x_curr_pos = -1
     visibility_ctr = 0
 
+    # debug_det_log = []
+    # debug_x_log = []
+    
     turn_ctr = 0
     while not win(board, D, mr_x_curr_pos):
-        visibility_ctr += 1
-        visibility_ctr %= 3
         
         move = misterXOracle()
-        logbook.append(move[1])
+        
+        # debug_x_log.append(move)
+        # print("X_LOG:", debug_x_log)
+        # print("DET_LOG:", debug_det_log)
+        
         if visibility_ctr == 0:
             visible.append(move[0])
+            logbook = []
+            if len(positions) == 4:
+                positions = [positions[-1]]
+            # else:
+            #     print("not 4")
+        else:
+            logbook.append(move[1])
         
         mr_x_curr_pos = move[0]
         # print(mr_x_curr_pos)
@@ -35,10 +47,11 @@ def game(detective_start_locations: list,
         if win(board, D, mr_x_curr_pos):
             break
 
-        if visibility_ctr == 0:
-            D = turn(board, positions[-3:], logbook[-3:], visible[-1])
-        else:
-            D = turn(board, positions[-visibility_ctr:], logbook[-visibility_ctr:], visible[-1])
+        D = turn(board, positions, logbook, visible[-1])
+        # debug_det_log.append(D)
+
+        visibility_ctr += 1
+        visibility_ctr %= 3
             
         turn_ctr += 1
         positions.append(D)

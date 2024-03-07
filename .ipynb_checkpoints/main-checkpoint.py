@@ -10,8 +10,10 @@ def main():
     board = Board("board.txt")
     num_vertices = board.get_num_vertices()
 
-    x = MisterX(random.randint(1,num_vertices-1), board)
+    #x = MisterX(random.randint(1,num_vertices-1), board)
+    x = MisterX(82, board)
 
+    # detective_locs = [41,46,124,142,167]
     detective_locs = [0,1,2]
     assert(len(detective_locs) < num_vertices)
     

@@ -26,17 +26,18 @@ def get_possible_x_locations(board: Board,
     neighbors = [last_visible]
     while distance < len(mr_x_logbook):
         transport = mr_x_logbook[distance]
+        
         new_neighbors = []
         for neighbor in neighbors:
-            new_neighbors.append(board.get_neighbors_by_transport(neighbor, mr_x_logbook[distance]))
-        flattened_new_neighbors = [item for sublist in new_neighbors for item in sublist]
+            new_neighbors.append(board.get_neighbors_by_transport(neighbor, transport))
+        flattened_new_neighbors = list(set([item[0] for sublist in new_neighbors for item in sublist]))
 
         new_neighbors_no_det = []
         for n in flattened_new_neighbors:
-            if n not in detective_logbook[distance]:
-                new_neighbors_no_det.append(n[0])           
+            if n not in detective_logbook[distance+1]:
+                new_neighbors_no_det.append(n)
         
-        neighbors = new_neighbors_no_det
+        neighbors = flattened_new_neighbors
         distance += 1
 
     return neighbors
