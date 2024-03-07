@@ -17,6 +17,8 @@ def game(detective_start_locations: list,
     visible = [mr_x_start_location]
     mr_x_curr_pos = -1
     visibility_ctr = 0
+
+    turn_ctr = 0
     while not win(board, D, mr_x_curr_pos):
         visibility_ctr += 1
         visibility_ctr %= 3
@@ -37,6 +39,9 @@ def game(detective_start_locations: list,
             D = turn(board, positions[-3:], logbook[-3:], visible[-1])
         else:
             D = turn(board, positions[-visibility_ctr:], logbook[-visibility_ctr:], visible[-1])
+            
+        turn_ctr += 1
         positions.append(D)
-
+        
+    print(turn_ctr)
     return positions
