@@ -21,3 +21,6 @@ class MisterX:
                 transport_enum = SYTransport.RAIL
         
         return (self.location, transport_enum)
+
+    def get_location(self):
+        return self.location
