@@ -24,7 +24,7 @@ def game(detective_start_locations: list,
     turn_ctr = 0
     while not win(board, D, mr_x_curr_pos):
         
-        move = misterXOracle()
+        move = misterXOracle(positions[-1])
         
         # debug_x_log.append(move)
         # print("X_LOG:", debug_x_log)
@@ -54,6 +54,7 @@ def game(detective_start_locations: list,
         visibility_ctr %= 3
             
         turn_ctr += 1
+        print(turn_ctr)
         positions.append(D)
         
     print(turn_ctr)

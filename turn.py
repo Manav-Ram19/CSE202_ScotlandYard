@@ -64,7 +64,7 @@ def min_avg_distance(board: Board,
     best_avg = float('inf')
     for combo in comb_unique:
         # print(combo)
-        sum = 0
+        sum = 0.0
         for det_loc in combo:
             sum += distances[det_loc]
         avg = sum / len(detective_locations)
