@@ -3,6 +3,8 @@ from collections import deque
 from collections import defaultdict
 from itertools import product
 
+COVERAGE_THRESHOLD = 0
+
 def heuristic_1_turn(board: Board,
         detective_logbook: list,
         mr_x_logbook: list,
@@ -110,3 +112,58 @@ def get_largest_distance(board: Board,
             total_distances[x_loc] += distances_det[x_loc]
 
     return min(total_distances.values())
+
+def calculate_coverage(board: Board,
+                      detective_locations: list,
+                      mr_x_possible_locations: list) -> int:
+    seen = set()
+    counter = 0
+    unique_mr_x_locations = set(mr_x_possible_locations)
+    for det_loc in detective_locations:
+        covered_locations = list(board.get_neighbors(det_loc)).append(neighbor)
+        for neighbor in covered_locations:
+            if neighbor in unique_mr_x_locations and neighbor not in seen:
+                counter += 1
+                seen.add(neighbor)
+    return counter
+
+def maximize_coverage(board: Board,
+                    detective_locations: list,
+                    mr_x_possible_locations: list) -> tuple [list, int]:
+    detectives_remaining = detective_locations
+    detectives_completed = []
+    new_detective_locations, _ = compute_cover_optimal(board, detectives_remaining, detectives_completed, mr_x_possible_locations)
+    return new_detective_locations
+
+def compute_cover_optimal(board: Board,
+                          detectives_remaining: list,
+                          detectives_completed: list,
+                          mr_x_possible_locations: list) -> tuple [list, int]:
+    if len(detectives_remaining) == 0:
+        return (detectives_completed, calculate_coverage(board, detectives_completed, mr_x_possible_locations))
+    current_detective = detectives_remaining[0]
+    current_max_coverage = 0
+    D_best = []
+    cur_detective_next_locations = list(board.get_neighbors(current_detective)).append(current_detective)
+    for n in cur_detective_next_locations:
+        new_d_r = detectives_remaining
+        new_d_c = detectives_completed
+        new_d_r.remove(current_detective)
+        new_d_c.append(n)
+
+        d_candidates, coverage_val = compute_cover_optimal(board, new_d_r, new_d_c, mr_x_possible_locations)
+        if coverage_val > current_max_coverage or D_best == []:
+            D_best = d_candidates
+            current_max_coverage = coverage_val
+    return (D_best, current_max_coverage)
+
+def heuristic_2_turn(board: Board,
+                      detective_logbook: list,
+                      mr_x_logbook: list,
+                      last_visible: int) -> list:
+    possible_locations = get_possible_x_locations(board, detective_logbook, mr_x_logbook, last_visible)
+    new_detective_locations = maximize_coverage(board, detective_logbook[-1], possible_locations)
+    if calculate_coverage(board, new_detective_locations, possible_locations) / len(possible_locations) > COVERAGE_THRESHOLD:
+        return new_detective_locations
+    return heuristic_1_turn(board, detective_logbook, mr_x_logbook, last_visible)
+

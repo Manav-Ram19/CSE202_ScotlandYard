@@ -1,7 +1,7 @@
 from collections.abc import Callable
 from board import SYTransport
 from board import Board
-from turn import heuristic_1_turn
+from turn import heuristic_1_turn, heuristic_2_turn
 
 def game(detective_start_locations: list, 
          mr_x_start_location: int,
@@ -47,7 +47,7 @@ def game(detective_start_locations: list,
         if win(board, D, mr_x_curr_pos):
             break
 
-        D = turn(board, positions, logbook, visible[-1])
+        D = heuristic_2_turn(board, positions, logbook, visible[-1])
         # debug_det_log.append(D)
 
         visibility_ctr += 1
