@@ -146,14 +146,16 @@ def compute_cover_optimal(board: Board,
     D_best = []
     cur_detective_next_locations = list(set([neighbor[0] for neighbor in list(board.get_neighbors(current_detective))]))
     cur_detective_next_locations.append(current_detective)
-    # print(cur_detective_next_locations)
+    ctr = 0
     for n in cur_detective_next_locations:
-        new_d_r = detectives_remaining
+        ctr += 1
+        new_d_r = detectives_remaining[1:]
+        # print(cur_detective_next_locations)
+        # print(str(ctr) + str(new_d_r))
         new_d_c = detectives_completed
-        new_d_r.remove(current_detective)
+        #new_d_r = new_d_r.remove(current_detective)
         new_d_c.append(n)
 
-        # print(new_d_r)
         d_candidates, coverage_val = compute_cover_optimal(board, new_d_r, new_d_c, mr_x_possible_locations)
         if coverage_val > current_max_coverage or D_best == []:
             D_best = d_candidates
