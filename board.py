@@ -1,6 +1,20 @@
 from enum import Enum
 import numpy as np
 
+def board_subset(filename: str, 
+                 size: int) -> None:
+    output_filename = filename[:-4] + "_" + str(size) + ".txt"
+    with open(filename, 'r') as original_file:
+        lines = original_file.readlines()[1:]
+
+    with open(output_filename, 'w') as out_file:
+        out_file.write(str(size) + "\n")
+        for line in lines:
+            line_split = line.split()
+            if int(line_split[0]) < size and int(line_split[1]) < size:
+                print(line)
+                out_file.write(line)
+
 class SYTransport(Enum):
     TAXI=1
     BUS=2

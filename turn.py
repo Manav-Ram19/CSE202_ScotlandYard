@@ -3,7 +3,7 @@ from collections import deque
 from collections import defaultdict
 from itertools import product
 
-COVERAGE_THRESHOLD = 0
+COVERAGE_THRESHOLD = 50
 
 def heuristic_1_turn(board: Board,
         detective_logbook: list,
@@ -171,4 +171,3 @@ def heuristic_2_turn(board: Board,
     if calculate_coverage(board, new_detective_locations, possible_locations) / len(possible_locations) > COVERAGE_THRESHOLD:
         return new_detective_locations
     return heuristic_1_turn(board, detective_logbook, mr_x_logbook, last_visible)
-
