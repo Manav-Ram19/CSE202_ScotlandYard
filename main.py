@@ -14,13 +14,13 @@ def main():
 
     # for i in range(100):
     #x = MisterX(random.randint(1,num_vertices-1), board)
-    x = MisterX(12, board)
+    x = MisterX(84, board)
 
-    #detective_locs = [41,46,124,142,167]
-    detective_locs = [0,1,2]
+    detective_locs = [41,46,124,142,167]
+    # detective_locs = [0,1,2]
     assert(len(detective_locs) < num_vertices)
 
-    positions = game(detective_locs, x.get_location(), board, x.oracleMrXMoveRandom, heuristic_2_turn, win)
+    positions = game(detective_locs, x.get_location(), board, x.oracleMrXMoveFurthest, heuristic_2_turn, win)
 
 
 if __name__ == "__main__":

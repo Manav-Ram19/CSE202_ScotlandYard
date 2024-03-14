@@ -3,7 +3,7 @@ from collections import deque
 from collections import defaultdict
 from itertools import product
 
-COVERAGE_THRESHOLD = 50
+COVERAGE_THRESHOLD = 0.5
 
 def heuristic_1_turn(board: Board,
         detective_logbook: list,
@@ -152,7 +152,7 @@ def compute_cover_optimal(board: Board,
         new_d_r = detectives_remaining[1:]
         # print(cur_detective_next_locations)
         # print(str(ctr) + str(new_d_r))
-        new_d_c = detectives_completed
+        new_d_c = detectives_completed.copy()
         #new_d_r = new_d_r.remove(current_detective)
         new_d_c.append(n)
 
@@ -169,5 +169,8 @@ def heuristic_2_turn(board: Board,
     possible_locations = get_possible_x_locations(board, detective_logbook, mr_x_logbook, last_visible)
     new_detective_locations = maximize_coverage(board, detective_logbook[-1], possible_locations)
     if calculate_coverage(board, new_detective_locations, possible_locations) / len(possible_locations) > COVERAGE_THRESHOLD:
+        print ("COVERAGE", new_detective_locations)
         return new_detective_locations
-    return heuristic_1_turn(board, detective_logbook, mr_x_logbook, last_visible)
+    new_detective_locations = heuristic_1_turn(board, detective_logbook, mr_x_logbook, last_visible)
+    print ("MIN DISTANCE", new_detective_locations)
+    return new_detective_locations
