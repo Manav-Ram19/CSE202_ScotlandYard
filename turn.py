@@ -41,7 +41,6 @@ def get_possible_x_locations(board: Board,
         
         neighbors = flattened_new_neighbors
         distance += 1
-
     return neighbors
 
 
@@ -120,7 +119,8 @@ def calculate_coverage(board: Board,
     counter = 0
     unique_mr_x_locations = set(mr_x_possible_locations)
     for det_loc in detective_locations:
-        covered_locations = list(board.get_neighbors(det_loc)).append(neighbor)
+        covered_locations = list(set([neighbor[0] for neighbor in list(board.get_neighbors(det_loc))]))
+        covered_locations.append(det_loc)
         for neighbor in covered_locations:
             if neighbor in unique_mr_x_locations and neighbor not in seen:
                 counter += 1
@@ -144,13 +144,16 @@ def compute_cover_optimal(board: Board,
     current_detective = detectives_remaining[0]
     current_max_coverage = 0
     D_best = []
-    cur_detective_next_locations = list(board.get_neighbors(current_detective)).append(current_detective)
+    cur_detective_next_locations = list(set([neighbor[0] for neighbor in list(board.get_neighbors(current_detective))]))
+    cur_detective_next_locations.append(current_detective)
+    # print(cur_detective_next_locations)
     for n in cur_detective_next_locations:
         new_d_r = detectives_remaining
         new_d_c = detectives_completed
         new_d_r.remove(current_detective)
         new_d_c.append(n)
 
+        # print(new_d_r)
         d_candidates, coverage_val = compute_cover_optimal(board, new_d_r, new_d_c, mr_x_possible_locations)
         if coverage_val > current_max_coverage or D_best == []:
             D_best = d_candidates

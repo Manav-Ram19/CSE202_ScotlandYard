@@ -1,7 +1,7 @@
 from collections.abc import Callable
 from board import SYTransport
 from board import Board
-from turn import heuristic_1_turn
+from turn import heuristic_1_turn, heuristic_2_turn
 
 def game(detective_start_locations: list, 
          mr_x_start_location: int,

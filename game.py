@@ -47,7 +47,7 @@ def game(detective_start_locations: list,
         if win(board, D, mr_x_curr_pos):
             break
 
-        D = heuristic_2_turn(board, positions, logbook, visible[-1])
+        D = turn(board, positions, logbook, visible[-1])
         # debug_det_log.append(D)
 
         visibility_ctr += 1
