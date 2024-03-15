@@ -100,12 +100,15 @@ def write_graph_to_file(output_file_name: string,
         for node in graph:
             for neighbor in graph[node]:
                 neighbor_node, transport_num = neighbor
+
+                # Avoid duplicate edges
+                if node > neighbor_node: continue 
+
                 transport = SYTransport.TAXI
 
                 if transport_num == 2: transport = SYTransport.BUS
                 elif transport_num == 3: transport = SYTransport.RAIL
 
-                print(node, neighbor_node, transport)
                 file.write(f"{node} {neighbor_node} {transport.name}\n")
 
 def main():
