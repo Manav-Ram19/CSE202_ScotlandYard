@@ -168,9 +168,9 @@ def heuristic_2_turn(board: Board,
                       last_visible: int) -> list:
     possible_locations = get_possible_x_locations(board, detective_logbook, mr_x_logbook, last_visible)
     new_detective_locations = maximize_coverage(board, detective_logbook[-1], possible_locations)
-    if calculate_coverage(board, new_detective_locations, possible_locations) / len(possible_locations) > COVERAGE_THRESHOLD:
-        print ("COVERAGE", new_detective_locations)
+    if new_detective_locations[1] / len(possible_locations) > COVERAGE_THRESHOLD:
+        # print ("COVERAGE", new_detective_locations)
         return new_detective_locations
     new_detective_locations = heuristic_1_turn(board, detective_logbook, mr_x_logbook, last_visible)
-    print ("MIN DISTANCE", new_detective_locations)
+    # print ("MIN DISTANCE", new_detective_locations)
     return new_detective_locations
