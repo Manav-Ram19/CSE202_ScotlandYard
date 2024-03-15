@@ -1,3 +1,4 @@
 # ignore pycache and python env
 __pycache__
 env/
+venv/
